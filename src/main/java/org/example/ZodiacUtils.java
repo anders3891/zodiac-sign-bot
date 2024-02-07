@@ -1,8 +1,12 @@
 package org.example;
 
+import java.time.LocalDate;
+
 public class ZodiacUtils {
 
     public static String getSignName(int day, int month){
+        try {LocalDate.parse(String.format("2024-%02d-%02d", month, day));}
+        catch (Exception e) {throw new IllegalArgumentException("Incorrect day or month");}
 
         if ((month==3 && day >= 21) || (month==4 && day <= 20)) {
             return "Овен";

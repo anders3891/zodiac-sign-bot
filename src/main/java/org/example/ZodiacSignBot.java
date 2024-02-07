@@ -38,9 +38,18 @@ public class ZodiacSignBot extends TelegramLongPollingBot {
         if (text.matches("\\d{2}\\.\\d{2}")) {
             int day = Integer.parseInt(text.substring(0, text.indexOf('.')));
             int month = Integer.parseInt(text.substring(text.indexOf('.') + 1));
-            System.out.println("Знак зодиака:" + " " + ZodiacUtils.getSignName(day, month));
+            String signName = null;
+
+            try{ZodiacUtils.getSignName(day, month);
+                System.out.println("Знак зодиака:" + " " + ZodiacUtils.getSignName(day, month));
+            } catch (IllegalArgumentException e){
+            }
+            String msg = signName == null
+                    ? "Введите правильную дату"
+                    : "Знак зодиака:" + signName;
+
             SendMessage sendMessage = SendMessage.builder()
-                    .text("Знак зодиака:" + "" + ZodiacUtils.getSignName(day, month))
+                    .text(msg)
                     .chatId(message.getChatId())
                     .build();
             try {
